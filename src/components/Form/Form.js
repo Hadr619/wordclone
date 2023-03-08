@@ -1,22 +1,16 @@
 import React from 'react';
 
-export default function Form({ handleSubmit }) {
+export default function Form({ handleSubmit, showBanner }) {
     const [guess, setGuess] = React.useState('');
-    const [error, setError] = React.useState(false);
-    console.log(error);
+
+
     return (
         <form
             className="guess-input-wrapper"
             onSubmit={(event) => {
                 event.preventDefault();
-                if (guess.length < 5) {
-                    setError(true);
-                }
-                else {
-                    setError(false)
-                    handleSubmit(guess)
-                    setGuess('');
-                }
+                handleSubmit(guess)
+                setGuess('');
 
             }}
         >
@@ -26,10 +20,10 @@ export default function Form({ handleSubmit }) {
                 required
                 pattern="[a-zA-Z]{5}"
                 title="5 letter word"
+                disabled={showBanner}
                 onChange={(event) => {
                     setGuess(event.target.value.toUpperCase())
                 }} />
-            {error ? <p className='error'>Needs to be 5 letters</p> : ''}
         </form>
     )
 }
